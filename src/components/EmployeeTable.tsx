@@ -42,12 +42,14 @@ export const EmployeeTable = ({}: EmployeeTableProps) => {
     <Container sx={{width:600, mb: 5 }}>
       <TableContainer component={Paper}>
         <TableMUI  aria-label="simple table">
+
           <TableHead>
             <TableRow sx={{cursor: 'default'}}>
               <TableCell align="center">ФИО</TableCell>
               <TableCell align="center">Образование</TableCell>
             </TableRow>
           </TableHead>
+
           <TableBody>
             {list.map(item => (
               <TableRow
@@ -65,6 +67,7 @@ export const EmployeeTable = ({}: EmployeeTableProps) => {
               </TableRow>
             ))}
           </TableBody>
+          
         </TableMUI>
       </TableContainer>
     </Container>

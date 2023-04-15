@@ -16,6 +16,7 @@ const employeeSlice = createSlice({
         selected: defaultSelected,
         modalAdd: false,
         modalEdit: false,
+        modalDegree: false,
     },
     reducers: {
         // Действия со списком уровней образования
@@ -63,6 +64,12 @@ const employeeSlice = createSlice({
         modalEditClose(state) {
             state.modalEdit = false;
         },
+        modalDegreeOpen(state) {
+            state.modalDegree = true;
+        },
+        modalDegreeClose(state) {
+            state.modalDegree = false;
+        },
     }
 });
 
@@ -75,7 +82,9 @@ export const {
     modalAddOpen,
     modalAddClose,
     modalEditOpen,
-    modalEditClose
+    modalEditClose,
+    modalDegreeOpen,
+    modalDegreeClose,
 } = employeeSlice.actions;
 export default employeeSlice.reducer;
 

@@ -2,38 +2,21 @@ import { useEffect, useState } from 'react';
 // Material UI элементы
 import { 
   Box,
-  Button,
-  Typography,
   Modal,
-  TextField,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select, 
-  IconButton
 } from '@mui/material';
-
-import {
-  Edit as EditIcon,
-  Clear as ClearIcon,
-} from '@mui/icons-material';
 
 // Redux-toolkit инструменты
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import {     
-  listAdd,
-  listRemove,
   listEdit,
-  selectedToggle,
   selectedClear,
-  modalAddOpen,
-  modalAddClose,
-  modalEditOpen,
   modalEditClose,
 } from '../store/slices/employeeSlice';
 import { Degree } from '../types';
-
-
+import { ModalHeader } from './low-level/ModalHeader';
+import { ModalDoneButton } from './low-level/ModalDoneButton';
+import { ModalSelect } from './low-level/ModalSelect';
+import { ModalTextField } from './low-level/ModalTextField';
 
 
 const style = {
@@ -48,12 +31,6 @@ const style = {
   p: 4,
 };
 
-
-const getDegreeName = (id: number, listDegree: Degree[]) => {
-  const degree = listDegree.find(degree => degree.id === id);
-  if (degree) return degree.name
-}
-
 interface EmployeeEditModalProps {};
 
 export const EmployeeEditModal = ({}: EmployeeEditModalProps) => {
@@ -62,11 +39,8 @@ export const EmployeeEditModal = ({}: EmployeeEditModalProps) => {
   const open = useAppSelector(state => state.employee.modalEdit);
   const selected = useAppSelector(state => state.employee.selected)[0];
 
-  const listDegree = useAppSelector(state => state.degree.list);
-
   const [newName, setNewName] = useState('');
   const defaultDegreeId = -1;
-  const defaultDegreeName = 'Не выбрано';
   const [newDegree, setNewDegree] = useState(defaultDegreeId);
 
   useEffect(() => {
@@ -87,68 +61,18 @@ export const EmployeeEditModal = ({}: EmployeeEditModalProps) => {
     <Modal
       open={open}
       onClose={() => dispatch(modalEditClose())}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Typography variant="h6" component="h2" sx={{mb: 3}}>
-          Редактировать Сотрудника
-        </Typography>
-
-        <TextField
-          sx={{width: '100%', mb: 3}}
-          size="medium"
-          id="outlined-size-small"
-          label="ФИО"
-          placeholder='Введите новое ФИО'
-          defaultValue={newName}
-          onChange={(e) => {
-            setNewName(e.target.value)
-          }}
+        <ModalHeader title='Редактировать Сотрудника' closeFunction={() => dispatch(modalEditClose())}/>
+        <ModalTextField label='ФИО' defaultValue={newName} placeholder='Введите новое ФИО' onChange={e => setNewName(e.target.value)}/>
+        <ModalSelect 
+          label='Образование' 
+          value={newDegree} 
+          defaultValue={defaultDegreeId} 
+          onChange={e => setNewDegree(Number(e.target.value))} 
+          clearOnClick={() => setNewDegree(defaultDegreeId)}
         />
-
-        <Box sx={{mb: 3, display: 'inline-flex', width: '100%'}}>
-          <FormControl sx={{width: '100%'}}>
-            <InputLabel id="demo-simple-select-label">Образование</InputLabel>
-            <Select
-              value={newDegree}
-              label="Образование"
-              onChange={e => setNewDegree(Number(e.target.value))}
-            >
-              <MenuItem disabled value={defaultDegreeId}>{defaultDegreeName}</MenuItem>
-              {listDegree.map(degree => (
-                <MenuItem key={degree.name} value={degree.id}>{degree.name}</MenuItem>
-              ))}
-
-            </Select>
-          </FormControl>
-          
-          <IconButton sx={{m: 1}} color="primary">
-            <EditIcon />
-          </IconButton>
-
-          <IconButton sx={{m: 1, ml: 0, mr: 0}} color="primary" disabled={newDegree === defaultDegreeId} onClick={() => setNewDegree(defaultDegreeId)}>
-            <ClearIcon />
-          </IconButton>
-        </Box>
-
-        <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-          <Button 
-            variant="contained" 
-            color="success"
-            disabled={newDegree === defaultDegreeId || !newName}
-            onClick={editEmployee}
-          >
-            ОК
-          </Button>
-          <Button 
-            variant="contained" 
-            color="error"
-            onClick={() => dispatch(modalEditClose())}
-          >
-            Отмена
-          </Button>
-        </Box>
+        <ModalDoneButton onClick={editEmployee} disable={newDegree === defaultDegreeId || !newName}/>
       </Box>
     </Modal>
   );

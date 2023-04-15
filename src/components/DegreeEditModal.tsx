@@ -1,28 +1,23 @@
+// React
 import { useEffect, useState } from 'react';
 // Material UI элементы
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import { TextField } from '@mui/material';
+import { 
+  Box,
+  Modal,
+} from '@mui/material';
 // Redux-toolkit инструменты
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import {     
-  listAdd,
-  listRemove,
+import {
   listEdit,
-  selectedToggle,
   selectedClear,
-  modalAddOpen,
-  modalAddClose,
-  modalEditOpen,
   modalEditClose,
 } from '../store/slices/degreeSlice';
-import { Degree } from '../types';
+// Реиспользуемые компоненты
+import { ModalHeader } from './low-level/ModalHeader';
+import { ModalDoneButton } from './low-level/ModalDoneButton';
+import { ModalTextField } from './low-level/ModalTextField';
 
-
-
-
+// Стилизация модального окна
 const style = {
   position: 'absolute',
   top: '50%',
@@ -35,69 +30,40 @@ const style = {
   p: 4,
 };
 
+// Типизация пропсов
 interface DegreeEditModalProps {};
 
 export const DegreeEditModal = ({}: DegreeEditModalProps) => {
-
   const dispatch = useAppDispatch();
-  const open = useAppSelector(state => state.degree.modalEdit);
-  const selected = useAppSelector(state => state.degree.selected)[0];
 
+  // Redux-toolkit стейт открытия модального окна 
+  const open = useAppSelector(state => state.degree.modalEdit);
+  // Redux-toolkit стейт выделенных строк. [0] потому что здесь всегда один элемент 
+  const selected = useAppSelector(state => state.degree.selected)[0];
+  // React стейт для значения из поля ввода
   const [newName, setNewName] = useState('');
-  
+  // Хук для обновления дефолтного значения в поле ввода на значение из выделенной строки
   useEffect(() => {
     if (selected) {
       setNewName(selected.name);
     }
   }, [selected]);
-
+  // Функция обработки кнопки ОК. Redux-toolkit actions
   const editDegree = () => {
-    dispatch(listEdit({id: selected.id, name: newName}));
-    dispatch(modalEditClose());
-    dispatch(selectedClear())
+    dispatch(listEdit({id: selected.id, name: newName})); // Изменение Образования
+    dispatch(selectedClear()); // Очистка выделения строк в таблице
+    dispatch(modalEditClose()); // Закрытие модального окна
   }
 
   return (
     <Modal
       open={open}
       onClose={() => dispatch(modalEditClose())}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Typography variant="h6" component="h2" sx={{mb: 3}}>
-          Редактировать уровень образования
-        </Typography>
-
-        <TextField
-          sx={{width: '100%', mb: 3}}
-          size="medium"
-          id="outlined-size-small"
-          label="Название"
-          placeholder='Введите новое название'
-          defaultValue={newName}
-          onChange={(e) => {
-            setNewName(e.target.value)
-          }}
-        />
-
-        <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-          <Button 
-            variant="contained" 
-            color="success"
-            disabled={!newName}
-            onClick={editDegree}
-          >
-            ОК
-          </Button>
-          <Button 
-            variant="contained" 
-            color="error"
-            onClick={() => dispatch(modalEditClose())}
-          >
-            Отмена
-          </Button>
-        </Box>
+        <ModalHeader title='Редактировать уровень образования' closeFunction={() => dispatch(modalEditClose())}/>
+        <ModalTextField label='Название' placeholder='Введите новое название' onChange={e => setNewName(e.target.value)} defaultValue={newName}/>
+        <ModalDoneButton onClick={editDegree} disable={!newName}/>
       </Box>
     </Modal>
   );

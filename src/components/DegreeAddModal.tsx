@@ -1,27 +1,23 @@
+// React
 import { useState } from 'react';
 // Material UI элементы
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import { TextField } from '@mui/material';
+import { 
+  Box,
+  Modal,
+} from '@mui/material';
 // Redux-toolkit инструменты
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import {     
   listAdd,
-  listRemove,
-  listEdit,
-  selectedToggle,
   selectedClear,
-  modalAddOpen,
   modalAddClose,
-  modalEditOpen,
-  modalEditClose,
 } from '../store/slices/degreeSlice';
+// Реиспользуемые компоненты
+import { ModalHeader } from './low-level/ModalHeader';
+import { ModalDoneButton } from './low-level/ModalDoneButton';
+import { ModalTextField } from './low-level/ModalTextField';
 
-
-
-
+// Стилизация модального окна
 const style = {
   position: 'absolute',
   top: '50%',
@@ -34,59 +30,32 @@ const style = {
   p: 4,
 };
 
+// Типизация пропсов
 interface DegreeAddModalProps {};
 
 export const DegreeAddModal = ({}: DegreeAddModalProps) => {
-
   const dispatch = useAppDispatch();
+
+  // Redux-toolkit стейт открытия модального окна 
   const open = useAppSelector(state => state.degree.modalAdd);
-
+  // React стейт для значения из поля ввода
   const [newName, setNewName] = useState<string>('');
-
+  // Функция обработки кнопки ОК. Redux-toolkit actions
   const addDegree = () => {
-    dispatch(listAdd({name: newName}));
-    dispatch(modalAddClose());
-    dispatch(selectedClear())
+    dispatch(listAdd({name: newName})); // Добавление нового Образования
+    dispatch(selectedClear()); // Очистка выделения строк в таблице
+    dispatch(modalAddClose()); // Закрытие модального окна
   }
 
   return (
     <Modal
       open={open}
       onClose={() => dispatch(modalAddClose())}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <Typography variant="h6" component="h2" sx={{mb: 3}}>
-          Добавить уровень образования
-        </Typography>
-
-        <TextField
-          sx={{width: '100%', mb: 3}}
-          label="Название"
-          id="outlined-size-small"
-          placeholder='Введите название'
-          size="medium"
-          onChange={e => setNewName(e.target.value)}
-        />
-
-        <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-          <Button 
-            variant="contained" 
-            color="success"
-            disabled={!newName}
-            onClick={addDegree}
-          >
-            ОК
-          </Button>
-          <Button 
-            variant="contained" 
-            color="error"
-            onClick={() => dispatch(modalAddClose())}
-          >
-            Отмена
-          </Button>
-        </Box>
+        <ModalHeader title='Добавить уровень образования' closeFunction={() => dispatch(modalAddClose())}/>
+        <ModalTextField label='Название' placeholder='Введите название' onChange={e => setNewName(e.target.value)}/>
+        <ModalDoneButton onClick={addDegree} disable={!newName}/>
       </Box>
     </Modal>
   );
