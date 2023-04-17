@@ -8,5 +8,5 @@ export type Degree = {
 export type Employee = {
     id: number,
     name: string,
-    degree: number,
+    degree_id: number,
 }

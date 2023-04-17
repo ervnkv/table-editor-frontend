@@ -46,19 +46,20 @@ export const EmployeeEditModal = ({}: EmployeeEditModalProps) => {
   useEffect(() => {
     if (selected) {
       setNewName(selected.name);
-      setNewDegree(selected.degree);
+      setNewDegree(selected.degree_id);
     }
   }, [selected]);
 
   const editEmployee = () => {
     if (!newName || !newDegree) return
-    dispatch(listEdit({id: selected.id, name: newName, degree: newDegree}));
+    dispatch(listEdit({id: selected.id, name: newName, degree_id: newDegree}));
     dispatch(modalEditClose());
     dispatch(selectedClear())
   }
 
   return (
     <Modal
+      sx={{zIndex: 2}}
       open={open}
       onClose={() => dispatch(modalEditClose())}
     >

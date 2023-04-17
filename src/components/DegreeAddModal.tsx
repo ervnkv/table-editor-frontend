@@ -7,10 +7,11 @@ import {
 } from '@mui/material';
 // Redux-toolkit инструменты
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import {     
-  listAdd,
+import {
   selectedClear,
   modalAddClose,
+  listAdd,
+  listGet,
 } from '../store/slices/degreeSlice';
 // Реиспользуемые компоненты
 import { ModalHeader } from './low-level/ModalHeader';
@@ -42,13 +43,15 @@ export const DegreeAddModal = ({}: DegreeAddModalProps) => {
   const [newName, setNewName] = useState<string>('');
   // Функция обработки кнопки ОК. Redux-toolkit actions
   const addDegree = () => {
-    dispatch(listAdd({name: newName})); // Добавление нового Образования
+    // dispatch(listAdd({name: newName})); // Добавление нового Образования
+    dispatch(listAdd(newName));
     dispatch(selectedClear()); // Очистка выделения строк в таблице
     dispatch(modalAddClose()); // Закрытие модального окна
   }
 
   return (
     <Modal
+      sx={{zIndex: 4}}
       open={open}
       onClose={() => dispatch(modalAddClose())}
     >

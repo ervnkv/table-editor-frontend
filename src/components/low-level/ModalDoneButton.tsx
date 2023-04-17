@@ -1,7 +1,7 @@
 // Material UI элементы
 import { 
   Box,
-  IconButton
+  Button,
 } from '@mui/material';
 import {
     Done as DoneIcon,
@@ -16,13 +16,15 @@ interface ModalDoneButtonProps {
 export const ModalDoneButton = ({onClick, disable}: ModalDoneButtonProps) => {
     return(
         <Box  sx={{display: 'flex', justifyContent: 'center'}}>         
-          <IconButton 
-            color="primary" 
-            onClick={onClick}
+          <Button 
             disabled={disable} 
-        >
-            <DoneIcon />
-          </IconButton>
+            startIcon={<DoneIcon />} 
+            variant="outlined"
+            color="primary"
+            onClick={onClick}
+          >
+            ОК
+          </Button>
         </Box>
     )
 };

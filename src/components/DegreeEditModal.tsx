@@ -38,10 +38,10 @@ export const DegreeEditModal = ({}: DegreeEditModalProps) => {
 
   // Redux-toolkit стейт открытия модального окна 
   const open = useAppSelector(state => state.degree.modalEdit);
-  // Redux-toolkit стейт выделенных строк. [0] потому что здесь всегда один элемент 
-  const selected = useAppSelector(state => state.degree.selected)[0];
   // React стейт для значения из поля ввода
   const [newName, setNewName] = useState('');
+  // Redux-toolkit стейт выделенных строк. [0] потому что здесь всегда один элемент 
+  const selected = useAppSelector(state => state.degree.selected)[0];
   // Хук для обновления дефолтного значения в поле ввода на значение из выделенной строки
   useEffect(() => {
     if (selected) {
@@ -57,6 +57,7 @@ export const DegreeEditModal = ({}: DegreeEditModalProps) => {
 
   return (
     <Modal
+      sx={{zIndex: 4}}
       open={open}
       onClose={() => dispatch(modalEditClose())}
     >

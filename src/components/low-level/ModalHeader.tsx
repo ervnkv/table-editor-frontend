@@ -20,7 +20,7 @@ export const ModalHeader = ({title, closeFunction}: ModalHeaderProps) => {
             <Typography variant="h6" component="h2" sx={{mb: 3}}>
                 {title}
             </Typography>
-            <IconButton  color="inherit" onClick={closeFunction}>
+            <IconButton  color="primary" onClick={closeFunction}>
                 <ClearIcon />
             </IconButton>
         </Box>

@@ -42,13 +42,14 @@ export const EmployeeAddModal = ({}: EmployeeAddModalProps) => {
   const [newDegree, setNewDegree] = useState(defaultDegreeId);
 
   const addEmployee = () => {
-    dispatch(listAdd({name: newName, degree: newDegree}));
+    dispatch(listAdd({name: newName, degree_id: newDegree}));
     dispatch(modalAddClose());
     dispatch(selectedClear())
   }
 
   return (
     <Modal
+      sx={{zIndex: 2}}
       open={open}
       onClose={() => dispatch(modalAddClose())}
     >

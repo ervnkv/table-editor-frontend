@@ -31,7 +31,7 @@ export const DegreeTools = ({}: DegreeToolsProps) => {
   // Хук для проверки выделенных образований
     useEffect(() => {
         if (selected) {
-            const isSomeDegreesUsed = selected.some(selectDegree => listEmployee.find(employee => employee.degree === selectDegree.id));
+            const isSomeDegreesUsed = selected.some(selectDegree => listEmployee.find(employee => employee.degree_id === selectDegree.id));
             setSelectedUsed(isSomeDegreesUsed);
         }
     }, [selected]);

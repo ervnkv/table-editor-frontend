@@ -26,31 +26,34 @@ export const Tools = ({addOnClick,editOnClick,editDisable,removeOnClick,removeDi
       <Grid item>
           <Button 
               startIcon={<AddCircleIcon />} 
-              variant="contained" 
-              color="success"
+              variant="outlined" 
+              // color="success"
+              color="primary"
               onClick={addOnClick}
           >
-              Добавить!
+              Добавить
           </Button>
       </Grid>
       <Grid item>
           <Button 
               disabled={editDisable} 
               startIcon={<EditIcon />} 
-              variant="contained" 
-              color="warning"
+              variant="outlined" 
+              // color="warning"
+              color="primary"
               onClick={editOnClick}
           >
               Редактировать
           </Button>
       </Grid>
       <Grid item>
-          <Tooltip title="Выделенный уровень образования используется" placement="bottom" arrow open={removeTipOpen} >
+          <Tooltip sx={{zIndex: 3}} title="Выделенный уровень образования используется" placement="bottom" arrow open={removeTipOpen} >
               <Button 
                   disabled={removeDisable} 
                   startIcon={<DeleteForeverIcon />} 
-                  variant="contained" 
-                  color="error"
+                  variant="outlined" 
+                  // color="error"
+                  color="primary"
                   onClick={removeOnClick}
               >
                   Удалить

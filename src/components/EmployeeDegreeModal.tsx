@@ -1,38 +1,15 @@
-import { useEffect, useState } from 'react';
 // Material UI элементы
 import { 
   Box,
-  Button,
-  Typography,
   Modal,
-  TextField,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select, 
-  IconButton
 } from '@mui/material';
-
-import {
-  Edit as EditIcon,
-  Clear as ClearIcon,
-} from '@mui/icons-material';
 
 // Redux-toolkit инструменты
 import { useAppSelector, useAppDispatch } from '../store/hooks';
-import {     
-  listAdd,
-  listRemove,
-  listEdit,
-  selectedToggle,
-  selectedClear,
-  modalAddOpen,
-  modalAddClose,
-  modalEditOpen,
+import {
   modalEditClose,
   modalDegreeClose,
 } from '../store/slices/employeeSlice';
-import { Degree } from '../types';
 import { DegreeTools } from './DegreeTools';
 import { DegreeTable } from './DegreeTable';
 import { DegreeEditModal } from './DegreeEditModal';
@@ -46,7 +23,6 @@ const style = {
   position: 'absolute',
   display: 'flex',
   flexDirection: 'column',
-  zIndex: 2,
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -68,6 +44,7 @@ export const EmployeeDegreeModal = ({}: EmployeeDegreeModalProps) => {
 
   return (
     <Modal
+      sx={{zIndex: 3}}
       open={open}
       onClose={() => dispatch(modalEditClose())}
     >
