@@ -2,7 +2,7 @@
 import { createSlice, PayloadAction, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
 import { Degree } from '../../types';
 
-const BASE_URL = 'http://localhost:8080/degree';
+const BASE_URL = `${process.env.REACT_APP_SERVER}/degree`;
 
 export const listGet = createAsyncThunk<Degree[], undefined, {rejectValue: string}>(
     'degree/listGet', async function(_, { rejectWithValue }) {

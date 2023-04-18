@@ -2,7 +2,7 @@
 import { createSlice, PayloadAction, createAsyncThunk, AnyAction} from '@reduxjs/toolkit';
 import { Employee } from '../../types';
 
-const BASE_URL = 'http://localhost:8080/employee';
+const BASE_URL = `${process.env.REACT_APP_SERVER}/employee`;
 
 export const listGet = createAsyncThunk<Employee[], undefined, {rejectValue: string}>(
     'employee/listGet', async function(_, { rejectWithValue }) {
