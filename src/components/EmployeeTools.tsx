@@ -1,5 +1,6 @@
+// Material UI элементы
 import { Container} from "@mui/material";
-
+// Redux-toolkit инструменты
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import {  
   listRemove,
@@ -7,12 +8,15 @@ import {
   modalAddOpen,
   modalEditOpen,
 } from '../store/slices/employeeSlice';
+// Реиспользуемые компоненты
 import { Tools } from "./low-level/Tools";
 
+// Типизация пропсов
 interface EmployeeToolsProps {};
 
 export const EmployeeTools = ({}: EmployeeToolsProps) => {
     const dispatch = useAppDispatch();
+    // Redux-toolkit стейт выделенных строк
     const selected = useAppSelector(state => state.employee.selected)
 
     return(

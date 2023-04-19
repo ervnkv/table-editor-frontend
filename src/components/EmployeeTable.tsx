@@ -1,6 +1,6 @@
 // React
 import { useEffect } from 'react';
-
+// Material UI элементы
 import {
   Table as TableMUI,
   TableBody,
@@ -13,7 +13,7 @@ import {
   CircularProgress,
   Alert
 } from '@mui/material';
-
+// Redux-toolkit инструменты
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import {
   listGet,
@@ -24,19 +24,20 @@ import {
 } from '../store/slices/degreeSlice';
 import { Degree } from '../types';
 
-
+// Функция получения названия Образования по данному id
 const getDegreeName = (id: number, listDegree: Degree[]) => {
   const degree = listDegree.find(degree => degree.id === id);
   if (degree) return degree.name
 }
-
+// Типизация пропсов
 interface EmployeeTableProps {};
 
 export const EmployeeTable = ({}: EmployeeTableProps) => {
   const dispatch = useAppDispatch();
-  const {selected, list, isLoading, errorText} = useAppSelector(state => state.employee);
+    // Redux-toolkit стейт списка всех строк, загрузки с сервера, ошибки и списка выделенных строк
+  const {list, isLoading, errorText, selected} = useAppSelector(state => state.employee);
   const listDegree = useAppSelector(state => state.degree.list);
-
+  // Хук для получения списка всех строк Сотрудников и Образований с сервера
   useEffect(() => {
     dispatch(listGet());
     dispatch(listGetDegree());

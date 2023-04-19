@@ -1,12 +1,14 @@
+// Material UI элементы
+import { Container } from "@mui/material";
 
-
+// Типизация пропсов
 interface NotFoundPageProps {};
 
 export const NotFoundPage = ({}: NotFoundPageProps) => {
   
   return(
-    <>
-      Страница не найдена
-    </>
+    <Container>
+      <h5>Страница не найдена</h5>
+    </Container>
   )
 };

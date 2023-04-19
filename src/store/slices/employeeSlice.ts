@@ -1,9 +1,17 @@
 // Добавление, редактирование и удаление сотрудников
+
 import { createSlice, PayloadAction, createAsyncThunk, AnyAction} from '@reduxjs/toolkit';
 import { Employee } from '../../types';
 
 const BASE_URL = `${process.env.REACT_APP_SERVER}/employee`;
 
+/**
+ * Получить всех сотрудников 
+ * 
+ * GET-запрос
+ * 
+ * GET-ответ - json в виде [ {"id": "1", "name": "Сотрудник 1", "degree_id": 1} ]
+ */
 export const listGet = createAsyncThunk<Employee[], undefined, {rejectValue: string}>(
     'employee/listGet', async function(_, { rejectWithValue }) {
         try {
@@ -15,7 +23,13 @@ export const listGet = createAsyncThunk<Employee[], undefined, {rejectValue: str
         }
     }
 );
-
+/**
+ * Добавить сотрудника
+ * 
+ * POST-запрос - в теле json в виде {"name": "Сотрудник 2", "degree_id": 1}
+ * 
+ * POST-ответ - json в виде {"name": "Сотрудник 2", "degree_id": 1}
+ */
 export const listAdd = createAsyncThunk<Employee, Pick<Employee, "name" | "degree_id">, {rejectValue: string}>(
     'employee/listAdd', async function({name, degree_id}, { rejectWithValue }) {
         try {
@@ -33,7 +47,13 @@ export const listAdd = createAsyncThunk<Employee, Pick<Employee, "name" | "degre
         }
     }
 );
-
+/**
+ * Изменить сотрудника
+ * 
+ * PUT-запрос - в теле json в виде {"id": "1", "name": "Сотрудник 2", "degree_id": 2}
+ * 
+ * PUT-ответ - json в виде {"id": "1", "name": "Сотрудник 2", "degree_id": 2}
+ */
 export const listEdit = createAsyncThunk<Employee, Employee, {rejectValue: string}>(
     'employee/listEdit', async function(employee, { rejectWithValue }) {
         try {
@@ -51,7 +71,13 @@ export const listEdit = createAsyncThunk<Employee, Employee, {rejectValue: strin
         }
     }
 );
-
+/**
+ * Удалить сотрудников
+ * 
+ * DELETE-запрос - в теле json в виде [1, 2]
+ * 
+ * DELETE-ответ - json в виде [1, 2]
+ */
 export const listRemove = createAsyncThunk<number[], Employee[], {rejectValue: string}>(
     'employee/listRemove', async function(employes, { rejectWithValue }) {
         try {
@@ -117,7 +143,7 @@ const employeeSlice = createSlice({
             state.modalDegree = false;
         },
     },
-
+    // Действия с сервером
     extraReducers: (builder) => {
         builder
             .addCase(listGet.pending, (state) => {
@@ -153,7 +179,7 @@ const employeeSlice = createSlice({
             })
     }
 });
-
+// Функция проверки вернулась ли ошибка 
 function isError(action: AnyAction) {
     return action.type.endsWith('rejected');
 }

@@ -4,7 +4,6 @@ import {
   Box,
   Modal,
 } from '@mui/material';
-
 // Redux-toolkit инструменты
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import {     
@@ -12,13 +11,13 @@ import {
   selectedClear,
   modalEditClose,
 } from '../store/slices/employeeSlice';
-import { Degree } from '../types';
+// Реиспользуемые компоненты
 import { ModalHeader } from './low-level/ModalHeader';
 import { ModalDoneButton } from './low-level/ModalDoneButton';
 import { ModalSelect } from './low-level/ModalSelect';
 import { ModalTextField } from './low-level/ModalTextField';
 
-
+// Стилизация модального окна
 const style = {
   position: 'absolute',
   top: '50%',
@@ -30,31 +29,34 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-
+// Типизация пропсов
 interface EmployeeEditModalProps {};
 
 export const EmployeeEditModal = ({}: EmployeeEditModalProps) => {
-
   const dispatch = useAppDispatch();
-  const open = useAppSelector(state => state.employee.modalEdit);
-  const selected = useAppSelector(state => state.employee.selected)[0];
 
+  // Redux-toolkit стейт открытия модального окна 
+  const open = useAppSelector(state => state.employee.modalEdit);
+  // Redux-toolkit стейт выделенных строк. [0] потому что здесь всегда один элемент 
+  const selected = useAppSelector(state => state.employee.selected)[0];
+  // React стейт для значения из поля ввода нового Имени сотрудника
   const [newName, setNewName] = useState('');
+  // React стейт для значения из селектора нового Образования
   const defaultDegreeId = -1;
   const [newDegree, setNewDegree] = useState(defaultDegreeId);
-
+  // Хук для обновления дефолтных значений в поле ввода на значение из выделенной строки
   useEffect(() => {
     if (selected) {
       setNewName(selected.name);
       setNewDegree(selected.degree_id);
     }
   }, [selected]);
-
+  // Функция обработки кнопки ОК. Redux-toolkit actions
   const editEmployee = () => {
-    if (!newName || !newDegree) return
-    dispatch(listEdit({id: selected.id, name: newName, degree_id: newDegree}));
-    dispatch(modalEditClose());
-    dispatch(selectedClear())
+    if (!newName || !newDegree) return; // Проверка на наличие отправляемых данных
+    dispatch(listEdit({id: selected.id, name: newName, degree_id: newDegree})); // Изменение Сотрудника
+    dispatch(selectedClear()); // Очистка выделения строк в таблице
+    dispatch(modalEditClose()); // Закрытие модального окна
   }
 
   return (

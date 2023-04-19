@@ -5,7 +5,6 @@ import {
   Box,
   Modal,
 } from '@mui/material';
-
 // Redux-toolkit инструменты
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import {     
@@ -13,12 +12,13 @@ import {
   selectedClear,
   modalAddClose,
 } from '../store/slices/employeeSlice';
+// Реиспользуемые компоненты
 import { ModalHeader } from './low-level/ModalHeader';
 import { ModalDoneButton } from './low-level/ModalDoneButton';
 import { ModalTextField } from './low-level/ModalTextField';
 import { ModalSelect } from './low-level/ModalSelect';
 
-
+// Стилизация модального окна
 const style = {
   position: 'absolute',
   top: '50%',
@@ -31,20 +31,23 @@ const style = {
   p: 4,
 };
 
+// Типизация пропсов
 interface EmployeeAddModalProps {};
 
 export const EmployeeAddModal = ({}: EmployeeAddModalProps) => {
   const dispatch = useAppDispatch();
-
+  // Redux-toolkit стейт открытия модального окна 
   const open = useAppSelector(state => state.employee.modalAdd);
+  // React стейт для значения из поля ввода Имени сотрудника
   const [newName, setNewName] = useState('');
+  // React стейт для значения из селектора Образования
   const defaultDegreeId = -1;
   const [newDegree, setNewDegree] = useState(defaultDegreeId);
-
+  // Функция обработки кнопки ОК. Redux-toolkit actions
   const addEmployee = () => {
-    dispatch(listAdd({name: newName, degree_id: newDegree}));
-    dispatch(modalAddClose());
-    dispatch(selectedClear())
+    dispatch(listAdd({name: newName, degree_id: newDegree})); // Добавление нового Сотрудника
+    dispatch(selectedClear()); // Очистка выделения строк в таблице
+    dispatch(modalAddClose()); // Закрытие модального окна
   }
 
   return (

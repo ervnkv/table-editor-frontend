@@ -3,22 +3,20 @@ import {
   Box,
   Modal,
 } from '@mui/material';
-
 // Redux-toolkit инструменты
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import {
   modalEditClose,
   modalDegreeClose,
 } from '../store/slices/employeeSlice';
+// Реиспользуемые компоненты
 import { DegreeTools } from './DegreeTools';
 import { DegreeTable } from './DegreeTable';
 import { DegreeEditModal } from './DegreeEditModal';
 import { DegreeAddModal } from './DegreeAddModal';
 import { ModalHeader } from './low-level/ModalHeader';
 
-
-
-
+// Стилизация модального окна
 const style = {
   position: 'absolute',
   display: 'flex',
@@ -34,12 +32,13 @@ const style = {
   p: 4,
 };
 
-
+// Типизация пропсов
 interface EmployeeDegreeModalProps {};
 
 export const EmployeeDegreeModal = ({}: EmployeeDegreeModalProps) => {
-
   const dispatch = useAppDispatch();
+  
+  // Redux-toolkit стейт открытия модального окна 
   const open = useAppSelector(state => state.employee.modalDegree);
 
   return (

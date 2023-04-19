@@ -11,7 +11,6 @@ import {
   Paper,
   Container,
   Alert,
-  Box,
   CircularProgress
 } from '@mui/material';
 
@@ -28,9 +27,9 @@ interface DegreeTableProps {};
 export const DegreeTable = ({}: DegreeTableProps) => {
   const dispatch = useAppDispatch();
   
-  // Redux-toolkit стейт выделенных строк
+  // Redux-toolkit стейт списка всех строк, загрузки с сервера, ошибки и списка выделенных строк
   const {list, isLoading, errorText, selected} = useAppSelector(state => state.degree);
-
+  // Хук для получения списка всех строк с сервера
   useEffect(() => {
     dispatch(listGet());
   }, [dispatch]);

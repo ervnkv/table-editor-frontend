@@ -1,9 +1,17 @@
 // Добавление, редактирование и удаление уровней образования
+
 import { createSlice, PayloadAction, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
 import { Degree } from '../../types';
 
 const BASE_URL = `${process.env.REACT_APP_SERVER}/degree`;
 
+/**
+ * Получить все уровни образования 
+ * 
+ * GET-запрос
+ * 
+ * GET-ответ - json в виде [ {"id": "1", "name": "Бакалавриат"} ]
+ */
 export const listGet = createAsyncThunk<Degree[], undefined, {rejectValue: string}>(
     'degree/listGet', async function(_, { rejectWithValue }) {
         try {
@@ -15,7 +23,13 @@ export const listGet = createAsyncThunk<Degree[], undefined, {rejectValue: strin
         }
     }
 );
-
+/**
+ * Добавить уровень образования 
+ * 
+ * POST-запрос - в теле json в виде {"name": "Магистратура"}
+ * 
+ * POST-ответ - json в виде {"id": "2", "name": "Магистратура"}
+ */
 export const listAdd = createAsyncThunk<Degree, string, {rejectValue: string}>(
     'degree/listAdd', async function(name, { rejectWithValue }) {
         try {
@@ -33,7 +47,13 @@ export const listAdd = createAsyncThunk<Degree, string, {rejectValue: string}>(
         }
     }
 );
-
+/**
+ * Изменить уровень образования
+ * 
+ * PUT-запрос - в теле json в виде {"id": "1", "name": "Аспирантура"}
+ * 
+ * PUT-ответ - json в виде {"id": "1", "name": "Аспирантура"}
+ */
 export const listEdit = createAsyncThunk<Degree, Degree, {rejectValue: string}>(
     'degree/listEdit', async function(degree, { rejectWithValue }) {
         try {
@@ -51,7 +71,13 @@ export const listEdit = createAsyncThunk<Degree, Degree, {rejectValue: string}>(
         }
     }
 );
-
+/**
+ * Удалить уровни образования
+ * 
+ * DELETE-запрос - в теле json в виде [1, 2]
+ * 
+ * DELETE-ответ - json в виде [1, 2]
+ */
 export const listRemove = createAsyncThunk<number[], Degree[], {rejectValue: string}>(
     'degree/listRemove', async function(degrees, { rejectWithValue }) {
         try {
@@ -109,7 +135,7 @@ const degreeSlice = createSlice({
             state.modalEdit = false;
         },
     },
-
+    // Действия с сервером
     extraReducers: (builder) => {
         builder
             .addCase(listGet.pending, (state) => {
@@ -145,7 +171,7 @@ const degreeSlice = createSlice({
             })
     }
 });
-
+// Функция проверки вернулась ли ошибка 
 function isError(action: AnyAction) {
     return action.type.endsWith('rejected');
 }

@@ -5,7 +5,6 @@ import { EmployeesPage } from './pages/EmployeesPage';
 import { NotFoundPage } from './pages/NotFoundPage';
 
 
-
 function App() {
   return (
     <>
