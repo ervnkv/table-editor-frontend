@@ -1,5 +1,6 @@
+// Локализация
+import i18next from '../../i18n'
 // Добавление, редактирование и удаление сотрудников
-
 import { createSlice, PayloadAction, createAsyncThunk, AnyAction} from '@reduxjs/toolkit';
 import { Employee } from '../../types';
 
@@ -16,10 +17,10 @@ export const listGet = createAsyncThunk<Employee[], undefined, {rejectValue: str
     'employee/listGet', async function(_, { rejectWithValue }) {
         try {
             const response = await fetch(BASE_URL);
-            if (!response.ok) return rejectWithValue('Не удалось получить данные с сервера');
+            if (!response.ok) return rejectWithValue(i18next.t("errors:server_data_error"));
             return await response.json();
         } catch (error) {
-            return rejectWithValue('Не удалось соединиться с сервером');
+            return rejectWithValue(i18next.t('errors:server_connect_error'));
         }
     }
 );
@@ -40,10 +41,10 @@ export const listAdd = createAsyncThunk<Employee, Pick<Employee, "name" | "degre
                 },
                 body: JSON.stringify({name, degree_id})
             });
-            if (!response.ok) return rejectWithValue('Не удалось получить данные с сервера');
+            if (!response.ok) return rejectWithValue(i18next.t("errors:server_data_error"));
             return await response.json();
         } catch (error) {
-            return rejectWithValue('Не удалось соединиться с сервером');
+            return rejectWithValue(i18next.t('errors:server_connect_error'));
         }
     }
 );
@@ -64,10 +65,10 @@ export const listEdit = createAsyncThunk<Employee, Employee, {rejectValue: strin
                 },
                 body: JSON.stringify(employee)
             });
-            if (!response.ok) return rejectWithValue('Не удалось получить данные с сервера');
+            if (!response.ok) return rejectWithValue(i18next.t("errors:server_data_error"));
             return await response.json();
         } catch (error) {
-            return rejectWithValue('Не удалось соединиться с сервером');
+            return rejectWithValue(i18next.t('errors:server_connect_error'));
         }
     }
 );
@@ -89,10 +90,10 @@ export const listRemove = createAsyncThunk<number[], Employee[], {rejectValue: s
                 },
                 body: JSON.stringify(ids)
             });
-            if (!response.ok) return rejectWithValue('Не удалось получить данные с сервера');
+            if (!response.ok) return rejectWithValue(i18next.t("errors:server_data_error"));
             return await response.json();
         } catch (error) {
-            return rejectWithValue('Не удалось соединиться с сервером');
+            return rejectWithValue(i18next.t('errors:server_connect_error'));
         }
     }
 );

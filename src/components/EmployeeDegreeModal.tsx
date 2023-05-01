@@ -15,6 +15,7 @@ import { DegreeTable } from './DegreeTable';
 import { DegreeEditModal } from './DegreeEditModal';
 import { DegreeAddModal } from './DegreeAddModal';
 import { ModalHeader } from './low-level/ModalHeader';
+import { useTranslation } from 'react-i18next';
 
 // Стилизация модального окна
 const style = {
@@ -37,7 +38,7 @@ interface EmployeeDegreeModalProps {};
 
 export const EmployeeDegreeModal = ({}: EmployeeDegreeModalProps) => {
   const dispatch = useAppDispatch();
-  
+  const {t} = useTranslation('header');
   // Redux-toolkit стейт открытия модального окна 
   const open = useAppSelector(state => state.employee.modalDegree);
 
@@ -48,7 +49,7 @@ export const EmployeeDegreeModal = ({}: EmployeeDegreeModalProps) => {
       onClose={() => dispatch(modalEditClose())}
     >
       <Box sx={style}>
-        <ModalHeader title='Образование' closeFunction={() => dispatch(modalDegreeClose())}/>
+        <ModalHeader title={t('degree_tab')} closeFunction={() => dispatch(modalDegreeClose())}/>
         <Box>
           <DegreeTools />
           <DegreeTable />

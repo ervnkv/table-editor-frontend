@@ -46,7 +46,7 @@ export const DegreeTools = ({}: DegreeToolsProps) => {
                     dispatch(listRemove(selected))
                     dispatch(selectedClear())
                 }} 
-                removeDisable={!(selected.length >= 1 && !selectedUsed)} 
+                removeDisable={selectedUsed || selected.length === 0} 
                 removeTipOpen={selectedUsed}
             />
         </Container>

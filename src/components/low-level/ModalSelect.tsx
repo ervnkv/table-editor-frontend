@@ -16,6 +16,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { modalDegreeOpen } from '../../store/slices/employeeSlice';
 import { selectedClear } from '../../store/slices/degreeSlice';
+import { useTranslation } from 'react-i18next';
 
 // Типизация пропсов
 interface ModalSelectProps {
@@ -29,7 +30,10 @@ interface ModalSelectProps {
 export const ModalSelect = ({label,value,defaultValue,onChange,clearOnClick}: ModalSelectProps) => {
   const dispatch = useAppDispatch();
   const listDegree = useAppSelector(state => state.degree.list);
-  const defaultDegreeName = 'Не выбрано';
+
+  const {t} = useTranslation(['buttons',"header"]);
+
+  const defaultDegreeName = t('buttons:empty');
 
   return(
     <Box sx={{mb: 3, display: 'inline-flex', width: '100%'}}>
@@ -37,7 +41,7 @@ export const ModalSelect = ({label,value,defaultValue,onChange,clearOnClick}: Mo
         <InputLabel id="demo-simple-select-label">{label}</InputLabel>
         <Select
           value={value}
-          label="Образование"
+          label={t('header:degree_tab')}
           onChange={onChange}
         >
           <MenuItem disabled value={defaultValue}>{defaultDegreeName}</MenuItem>

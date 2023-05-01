@@ -20,13 +20,14 @@ import {
   selectedToggle,
   listGet,
 } from '../store/slices/degreeSlice';
+import { useTranslation } from 'react-i18next';
 
 // Типизация пропсов
 interface DegreeTableProps {};
 
 export const DegreeTable = ({}: DegreeTableProps) => {
   const dispatch = useAppDispatch();
-  
+  const {t} = useTranslation('header');
   // Redux-toolkit стейт списка всех строк, загрузки с сервера, ошибки и списка выделенных строк
   const {list, isLoading, errorText, selected} = useAppSelector(state => state.degree);
   // Хук для получения списка всех строк с сервера
@@ -47,7 +48,7 @@ export const DegreeTable = ({}: DegreeTableProps) => {
 
             <TableHead>
               <TableRow sx={{cursor: 'default'}}>
-                <TableCell align="center">Образование</TableCell>
+                <TableCell align="center">{t('degree_tab')}</TableCell>
               </TableRow>
             </TableHead>
 

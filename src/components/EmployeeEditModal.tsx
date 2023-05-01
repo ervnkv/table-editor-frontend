@@ -16,6 +16,7 @@ import { ModalHeader } from './low-level/ModalHeader';
 import { ModalDoneButton } from './low-level/ModalDoneButton';
 import { ModalSelect } from './low-level/ModalSelect';
 import { ModalTextField } from './low-level/ModalTextField';
+import { useTranslation } from 'react-i18next';
 
 // Стилизация модального окна
 const style = {
@@ -34,7 +35,7 @@ interface EmployeeEditModalProps {};
 
 export const EmployeeEditModal = ({}: EmployeeEditModalProps) => {
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation('tables', {keyPrefix: 'employee_table.edit_modal'});
   // Redux-toolkit стейт открытия модального окна 
   const open = useAppSelector(state => state.employee.modalEdit);
   // Redux-toolkit стейт выделенных строк. [0] потому что здесь всегда один элемент 
@@ -66,10 +67,10 @@ export const EmployeeEditModal = ({}: EmployeeEditModalProps) => {
       onClose={() => dispatch(modalEditClose())}
     >
       <Box sx={style}>
-        <ModalHeader title='Редактировать Сотрудника' closeFunction={() => dispatch(modalEditClose())}/>
-        <ModalTextField label='ФИО' defaultValue={newName} placeholder='Введите новое ФИО' onChange={e => setNewName(e.target.value)}/>
+        <ModalHeader title={t('head')} closeFunction={() => dispatch(modalEditClose())}/>
+        <ModalTextField label={t('name_input_label')} defaultValue={newName} placeholder={t('name_input_placeholder')} onChange={e => setNewName(e.target.value)}/>
         <ModalSelect 
-          label='Образование' 
+          label={t('degree_select_label')} 
           value={newDegree} 
           defaultValue={defaultDegreeId} 
           onChange={e => setNewDegree(Number(e.target.value))} 

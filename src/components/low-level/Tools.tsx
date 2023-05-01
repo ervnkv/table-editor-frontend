@@ -9,6 +9,8 @@ import {
   Edit as EditIcon,
   DeleteForever as DeleteForeverIcon,
 } from '@mui/icons-material';
+// Локализация
+import { useTranslation } from 'react-i18next';
 
 // Типизация пропсов
 interface ToolsProps {
@@ -21,6 +23,8 @@ interface ToolsProps {
 };
 
 export const Tools = ({addOnClick,editOnClick,editDisable,removeOnClick,removeDisable,removeTipOpen = false}: ToolsProps) => {
+  const {t} = useTranslation(['buttons', 'errors']);
+
   return(
     <Grid container justifyContent="space-between" >
       <Grid item>
@@ -31,7 +35,7 @@ export const Tools = ({addOnClick,editOnClick,editDisable,removeOnClick,removeDi
               color="primary"
               onClick={addOnClick}
           >
-              Добавить
+              {t('add_button')}
           </Button>
       </Grid>
       <Grid item>
@@ -43,11 +47,11 @@ export const Tools = ({addOnClick,editOnClick,editDisable,removeOnClick,removeDi
               color="primary"
               onClick={editOnClick}
           >
-              Редактировать
+              {t('edit_button')}
           </Button>
       </Grid>
       <Grid item>
-          <Tooltip sx={{zIndex: 3}} title="Выделенный уровень образования используется" placement="bottom" arrow open={removeTipOpen} >
+          <Tooltip sx={{zIndex: 3}} title={t('errors:degree_used')} placement="bottom" arrow open={removeTipOpen} >
               <Button 
                   disabled={removeDisable} 
                   startIcon={<DeleteForeverIcon />} 
@@ -56,7 +60,7 @@ export const Tools = ({addOnClick,editOnClick,editDisable,removeOnClick,removeDi
                   color="primary"
                   onClick={removeOnClick}
               >
-                  Удалить
+                  {t('remove_button')}
               </Button>
           </Tooltip>
       </Grid>

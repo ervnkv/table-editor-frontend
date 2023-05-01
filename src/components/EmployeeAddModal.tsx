@@ -17,6 +17,7 @@ import { ModalHeader } from './low-level/ModalHeader';
 import { ModalDoneButton } from './low-level/ModalDoneButton';
 import { ModalTextField } from './low-level/ModalTextField';
 import { ModalSelect } from './low-level/ModalSelect';
+import { useTranslation } from 'react-i18next';
 
 // Стилизация модального окна
 const style = {
@@ -36,6 +37,7 @@ interface EmployeeAddModalProps {};
 
 export const EmployeeAddModal = ({}: EmployeeAddModalProps) => {
   const dispatch = useAppDispatch();
+  const {t} = useTranslation('tables', {keyPrefix: 'employee_table.add_modal'});
   // Redux-toolkit стейт открытия модального окна 
   const open = useAppSelector(state => state.employee.modalAdd);
   // React стейт для значения из поля ввода Имени сотрудника
@@ -57,10 +59,10 @@ export const EmployeeAddModal = ({}: EmployeeAddModalProps) => {
       onClose={() => dispatch(modalAddClose())}
     >
       <Box sx={style}>
-        <ModalHeader title='Добавить сотрудника' closeFunction={() => dispatch(modalAddClose())}/>
-        <ModalTextField label='ФИО' placeholder='Введите ФИО' onChange={e => setNewName(e.target.value)}/>
+        <ModalHeader title={t('head')} closeFunction={() => dispatch(modalAddClose())}/>
+        <ModalTextField label={t('name_input_label')} placeholder={t('name_input_placeholder')} onChange={e => setNewName(e.target.value)}/>
         <ModalSelect 
-          label='Образование' 
+          label={t('degree_select_label')} 
           value={newDegree} 
           defaultValue={defaultDegreeId} 
           onChange={e => setNewDegree(Number(e.target.value))} 

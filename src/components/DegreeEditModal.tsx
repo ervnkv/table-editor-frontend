@@ -16,6 +16,7 @@ import {
 import { ModalHeader } from './low-level/ModalHeader';
 import { ModalDoneButton } from './low-level/ModalDoneButton';
 import { ModalTextField } from './low-level/ModalTextField';
+import { useTranslation } from 'react-i18next';
 
 // Стилизация модального окна
 const style = {
@@ -35,7 +36,7 @@ interface DegreeEditModalProps {};
 
 export const DegreeEditModal = ({}: DegreeEditModalProps) => {
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation('tables', {keyPrefix: 'degree_table.edit_modal'});
   // Redux-toolkit стейт открытия модального окна 
   const open = useAppSelector(state => state.degree.modalEdit);
   // React стейт для значения из поля ввода
@@ -62,8 +63,8 @@ export const DegreeEditModal = ({}: DegreeEditModalProps) => {
       onClose={() => dispatch(modalEditClose())}
     >
       <Box sx={style}>
-        <ModalHeader title='Редактировать уровень образования' closeFunction={() => dispatch(modalEditClose())}/>
-        <ModalTextField label='Название' placeholder='Введите новое название' onChange={e => setNewName(e.target.value)} defaultValue={newName}/>
+        <ModalHeader title={t('head')} closeFunction={() => dispatch(modalEditClose())}/>
+        <ModalTextField label={t('name_input_label')} placeholder={t('name_input_placeholder')} onChange={e => setNewName(e.target.value)} defaultValue={newName}/>
         <ModalDoneButton onClick={editDegree} disable={!newName}/>
       </Box>
     </Modal>

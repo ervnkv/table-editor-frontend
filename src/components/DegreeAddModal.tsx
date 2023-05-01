@@ -16,6 +16,7 @@ import {
 import { ModalHeader } from './low-level/ModalHeader';
 import { ModalDoneButton } from './low-level/ModalDoneButton';
 import { ModalTextField } from './low-level/ModalTextField';
+import { useTranslation } from 'react-i18next';
 
 // Стилизация модального окна
 const style = {
@@ -35,7 +36,7 @@ interface DegreeAddModalProps {};
 
 export const DegreeAddModal = ({}: DegreeAddModalProps) => {
   const dispatch = useAppDispatch();
-
+  const {t} = useTranslation('tables', { keyPrefix: 'degree_table.add_modal' });
   // Redux-toolkit стейт открытия модального окна 
   const open = useAppSelector(state => state.degree.modalAdd);
   // React стейт для значения из поля ввода
@@ -54,8 +55,8 @@ export const DegreeAddModal = ({}: DegreeAddModalProps) => {
       onClose={() => dispatch(modalAddClose())}
     >
       <Box sx={style}>
-        <ModalHeader title='Добавить уровень образования' closeFunction={() => dispatch(modalAddClose())}/>
-        <ModalTextField label='Название' placeholder='Введите название' onChange={e => setNewName(e.target.value)}/>
+        <ModalHeader title={t('head')} closeFunction={() => dispatch(modalAddClose())}/>
+        <ModalTextField label={t('name_input_label')} placeholder={t('name_input_placeholder')} onChange={e => setNewName(e.target.value)}/>
         <ModalDoneButton onClick={addDegree} disable={!newName}/>
       </Box>
     </Modal>

@@ -6,6 +6,7 @@ import {
 import {
     Done as DoneIcon,
 } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 // Типизация пропсов
 interface ModalDoneButtonProps {
@@ -14,6 +15,7 @@ interface ModalDoneButtonProps {
 };
 
 export const ModalDoneButton = ({onClick, disable}: ModalDoneButtonProps) => {
+  const {t} = useTranslation('buttons');
     return(
         <Box  sx={{display: 'flex', justifyContent: 'center'}}>         
           <Button 
@@ -23,7 +25,7 @@ export const ModalDoneButton = ({onClick, disable}: ModalDoneButtonProps) => {
             color="primary"
             onClick={onClick}
           >
-            ОК
+            {t('accept_button')}
           </Button>
         </Box>
     )

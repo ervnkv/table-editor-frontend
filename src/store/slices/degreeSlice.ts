@@ -1,10 +1,10 @@
+// Локализация
+import i18next from '../../i18n'
 // Добавление, редактирование и удаление уровней образования
-
 import { createSlice, PayloadAction, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
 import { Degree } from '../../types';
 
 const BASE_URL = `${process.env.REACT_APP_SERVER}/degree`;
-
 /**
  * Получить все уровни образования 
  * 
@@ -16,10 +16,10 @@ export const listGet = createAsyncThunk<Degree[], undefined, {rejectValue: strin
     'degree/listGet', async function(_, { rejectWithValue }) {
         try {
             const response = await fetch(BASE_URL);
-            if (!response.ok) return rejectWithValue('Не удалось получить данные с сервера');
+            if (!response.ok) return rejectWithValue(i18next.t("errors:server_data_error"));
             return await response.json();
         } catch (error) {
-            return rejectWithValue('Не удалось соединиться с сервером');
+            return rejectWithValue(i18next.t("errors:server_connect_error"));
         }
     }
 );
@@ -40,10 +40,10 @@ export const listAdd = createAsyncThunk<Degree, string, {rejectValue: string}>(
                 },
                 body: JSON.stringify({name})
             });
-            if (!response.ok) return rejectWithValue('Не удалось получить данные с сервера');
+            if (!response.ok) return rejectWithValue(i18next.t("errors:server_data_error"));
             return await response.json();
         } catch (error) {
-            return rejectWithValue('Не удалось соединиться с сервером');
+            return rejectWithValue(i18next.t("errors:server_connect_error"));
         }
     }
 );
@@ -64,10 +64,10 @@ export const listEdit = createAsyncThunk<Degree, Degree, {rejectValue: string}>(
                 },
                 body: JSON.stringify(degree)
             });
-            if (!response.ok) return rejectWithValue('Не удалось получить данные с сервера');
+            if (!response.ok) return rejectWithValue(i18next.t("errors:server_data_error"));
             return await response.json();
         } catch (error) {
-            return rejectWithValue('Не удалось соединиться с сервером');
+            return rejectWithValue(i18next.t("errors:server_connect_error"));
         }
     }
 );
@@ -89,10 +89,10 @@ export const listRemove = createAsyncThunk<number[], Degree[], {rejectValue: str
                 },
                 body: JSON.stringify(ids)
             });
-            if (!response.ok) return rejectWithValue('Не удалось получить данные с сервера');
+            if (!response.ok) return rejectWithValue(i18next.t("errors:server_data_error"));
             return await response.json();
         } catch (error) {
-            return rejectWithValue('Не удалось соединиться с сервером');
+            return rejectWithValue(i18next.t("errors:server_connect_error"));
         }
     }
 );
