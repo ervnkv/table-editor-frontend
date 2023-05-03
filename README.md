@@ -1,6 +1,6 @@
 ### Фронтенд приложения table-editor | Приложение редактирования списка сотрудников и их образования
 #### Демо - http://993451-ce45547.tmweb.ru:3000/
-    Стэк - Typescript, React, React-Router, Redux-Toolkit, MaterialUI
+    Стэк - Typescript, React, React-Router, Redux-Toolkit, MaterialUI, i18n
 
 #### Настройка и запуск
     Скопировать репозиторий через git clone
